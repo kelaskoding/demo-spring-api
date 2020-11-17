@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.demo.demo.dto.BookData;
 import com.demo.demo.dto.ResponseData;
+import com.demo.demo.dto.SearchData;
 import com.demo.demo.helpers.DateTimeFormat;
 import com.demo.demo.models.entity.Book;
 import com.demo.demo.models.repos.BookRepo;
@@ -184,6 +185,58 @@ public class BookController {
         }catch(Exception e){
             response.setStatus(false);
             response.getMessages().add(e.getMessage());
+            response.setResponseDateTime(DateTimeFormat.format(new Date()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<?> findByTitle(@RequestBody SearchData data){
+        ResponseData response = new ResponseData();
+        response.setRequestDateTime(DateTimeFormat.format(new Date()));
+        try{
+            List<Book> books = repo.findByTitleLike("%"+data.getSearchKey()+"%");
+            if(books.size()>0){
+                response.setStatus(true);
+                response.getMessages().add("Books found");
+                response.setPayload(books);
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.ok(response);
+            }else{
+                response.setStatus(false);
+                response.getMessages().add("Books not found");
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception ex){
+            response.setStatus(false);
+            response.getMessages().add(ex.getMessage());
+            response.setResponseDateTime(DateTimeFormat.format(new Date()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @PostMapping("/search/author")
+    public ResponseEntity<?> findByAuthor(@RequestBody SearchData data){
+        ResponseData response = new ResponseData();
+        response.setRequestDateTime(DateTimeFormat.format(new Date()));
+        try{
+            List<Book> books = repo.findByAuthor(data.getSearchKey());
+            if(books.size()>0){
+                response.setStatus(true);
+                response.getMessages().add("Books found");
+                response.setPayload(books);
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.ok(response);
+            }else{
+                response.setStatus(false);
+                response.getMessages().add("Books not found");
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception ex){
+            response.setStatus(false);
+            response.getMessages().add(ex.getMessage());
             response.setResponseDateTime(DateTimeFormat.format(new Date()));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
