@@ -242,4 +242,30 @@ public class BookController {
         }
     }
 
+
+    @GetMapping("/price/{min}/to/{max}")
+    public ResponseEntity<?> findByPriceRange(@PathVariable("min") double min, @PathVariable("max") double max){
+        ResponseData response = new ResponseData();
+        response.setRequestDateTime(DateTimeFormat.format(new Date()));
+        try{
+            List<Book> books = repo.findByPriceBetween(min, max);
+            if(books.size()>0){
+                response.setStatus(true);
+                response.getMessages().add("Books found");
+                response.setPayload(books);
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.ok(response);
+            }else{
+                response.setStatus(false);
+                response.getMessages().add("Books not found");
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception e){
+            response.setStatus(false);
+            response.getMessages().add(e.getMessage());
+            response.setResponseDateTime(DateTimeFormat.format(new Date()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }
