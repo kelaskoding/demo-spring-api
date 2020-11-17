@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.demo.demo.models.entity.Book;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FakeBookRepo {
     
     private List<Book> listOfBooks  = new ArrayList<>(); 

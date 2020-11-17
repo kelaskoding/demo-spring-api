@@ -1,11 +1,27 @@
 package com.demo.demo.dto;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class BookData {
     private int id;
+
+    @NotEmpty(message="Kode is required")
+    @Size(min=3, max=5, message="Kode length must be 3 to 5 characters")
+    @Pattern(regexp="BK[0-9]+", message= "Kode must be start with BK")
     private String kode;
+
+    @NotEmpty(message = "Title is required")
     private String title;
+
+    @NotEmpty(message = "Author is required")
     private String author;
+
     private String description;
+    
+    @DecimalMin(value="1.0")
     private double price;
 
     public BookData() {

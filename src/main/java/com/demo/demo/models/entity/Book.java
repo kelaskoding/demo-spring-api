@@ -1,12 +1,33 @@
 package com.demo.demo.models.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tbl_book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(length=5, nullable=false, unique=true)
     private String kode;
+
+    @Column(length=200, nullable=false)
     private String title;
+
+    @Column(length=100, nullable=false)
     private String author;
+
+    @Column(length=255, nullable=true)
     private String description;
+
     private double price;
+
 
     public Book() {
     }
