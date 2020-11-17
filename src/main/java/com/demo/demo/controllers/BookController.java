@@ -119,7 +119,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeByKode(@PathVariable("id") int id){
+    public ResponseEntity<?> removeById(@PathVariable("id") int id){
         ResponseData response = new ResponseData();
         response.setRequestDateTime(DateTimeFormat.format(new Date()));
         try{
@@ -157,6 +157,33 @@ public class BookController {
         }catch(Exception ex){
             response.setStatus(false);
             response.getMessages().add(ex.getMessage());
+            response.setResponseDateTime(DateTimeFormat.format(new Date()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/kode/{kode}")
+    public ResponseEntity<?> findByKode(@PathVariable("kode") String kode){
+        ResponseData response = new ResponseData();
+        response.setRequestDateTime(DateTimeFormat.format(new Date()));
+        try{
+            Book book = repo.findByKode(kode);
+            if(book==null){
+                response.setStatus(false);
+                response.getMessages().add("Kode not found");
+                response.setResponseDateTime(DateTimeFormat.format(new Date()));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+            response.setStatus(true);
+            response.getMessages().add("Kode found");
+            response.setResponseDateTime(DateTimeFormat.format(new Date()));
+            response.setPayload(book);
+            return ResponseEntity.ok(response);
+
+        }catch(Exception e){
+            response.setStatus(false);
+            response.getMessages().add(e.getMessage());
             response.setResponseDateTime(DateTimeFormat.format(new Date()));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
