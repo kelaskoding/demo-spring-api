@@ -13,11 +13,11 @@ public class FakeBookRepo {
     private List<Book> listOfBooks  = new ArrayList<>(); 
 
     public FakeBookRepo(){
-        listOfBooks.add(new Book(1, "BK001","Sample Book 001","Hendro","No Description",20000));
-        listOfBooks.add(new Book(2, "BK002","Sample Book 002","Budi","No Description",35000));
-        listOfBooks.add(new Book(3, "BK003","Sample Book 003","Herman","No Description",40000));
-        listOfBooks.add(new Book(4, "BK004","Sample Book 004","Agus","No Description",50000));
-        listOfBooks.add(new Book(5, "BK005","Sample Book 005","Yuli","No Description",35000));
+        // listOfBooks.add(new Book(1, "BK001","Sample Book 001","Hendro","No Description",20000));
+        // listOfBooks.add(new Book(2, "BK002","Sample Book 002","Budi","No Description",35000));
+        // listOfBooks.add(new Book(3, "BK003","Sample Book 003","Herman","No Description",40000));
+        // listOfBooks.add(new Book(4, "BK004","Sample Book 004","Agus","No Description",50000));
+        // listOfBooks.add(new Book(5, "BK005","Sample Book 005","Yuli","No Description",35000));
     }
 
     public List<Book> findAll(){

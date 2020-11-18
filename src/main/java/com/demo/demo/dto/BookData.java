@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.demo.demo.models.entity.Author;
+
 public class BookData {
     private int id;
 
@@ -16,8 +18,7 @@ public class BookData {
     @NotEmpty(message = "Title is required")
     private String title;
 
-    @NotEmpty(message = "Author is required")
-    private String author;
+    private Author author;
 
     private String description;
     
@@ -27,7 +28,7 @@ public class BookData {
     public BookData() {
     }
 
-    public BookData(int id, String kode, String title, String author,String description, double price) {
+    public BookData(int id, String kode, String title, Author author,String description, double price) {
         this.id = id;
         this.kode = kode;
         this.title = title;
@@ -60,11 +61,11 @@ public class BookData {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 

@@ -221,7 +221,7 @@ public class BookController {
         ResponseData response = new ResponseData();
         response.setRequestDateTime(DateTimeFormat.format(new Date()));
         try{
-            List<Book> books = repo.findByAuthor(data.getSearchKey());
+            List<Book> books = repo.findByAuthorName(data.getSearchKey());
             if(books.size()>0){
                 response.setStatus(true);
                 response.getMessages().add("Books found");
